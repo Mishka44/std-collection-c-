@@ -42,8 +42,8 @@ int main()
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "ru");
 
-    int start{ 100 };
-    int finish{ 99999 };
+    int start{1};
+    int finish{199'999};
 
     std::vector<int> linArr;
     std::list<int> Link_list;
@@ -80,6 +80,35 @@ int main()
         Busted_list.at(i) -= 1;
     }
 
+    for (auto el : linArr) {
+        std::cout << el << ' ';
+    }
+    std::cout << "\n";
+
+
+    {
+        for (auto it = linArr.begin(); it != linArr.end(); ++it) {
+            *it  += 2;
+        }
+    }
+
+    {
+        for (auto it = Link_list.begin(); it != Link_list.end(); ++it) {
+            *it += 2;
+        }
+    }
+
+    {
+        for (auto it = Busted_list.begin(); it != Busted_list.end(); ++it) {
+            *it += 2;
+        }
+    }
+
+    
+
+
+
+
     while (linArr.size()) {
         //linArr.pop_back();
         linArr.erase(linArr.begin());
@@ -95,6 +124,13 @@ int main()
         //linArr.pop_back();
         Busted_list.erase(Busted_list.begin());
     }
+
+    /*std::string Cat;
+    std::cin >> Cat;
+
+    std::cout << Cat;*/
+
+
 
     return 0;
 }
