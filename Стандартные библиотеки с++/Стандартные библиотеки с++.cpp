@@ -2,6 +2,9 @@
 #include <vector>
 #include <Windows.h>
 #include <list>
+#include <random>
+#include<set>
+#include <map>
 #include <deque>
 
 
@@ -42,8 +45,12 @@ int main()
     SetConsoleOutputCP(1251);
     setlocale(LC_ALL, "ru");
 
+    std::random_device rd;
+    std::mt19937 distr{ rd() };
+    std::uniform_int_distribution<int> prov(-10, 50);
+
     int start{1};
-    int finish{199'999};
+    int finish{19};
 
     std::vector<int> linArr;
     std::list<int> Link_list;
@@ -52,19 +59,19 @@ int main()
     for (int i = start; i < finish; i++)
     {
         //linArr.push_back(i);
-        linArr.insert(linArr.begin(), i);
+        linArr.insert(linArr.begin(), prov(distr));
 
     }
     for (int i = start; i < finish; i++)
     {
         //Link_list.push_back(i);
-        Link_list.insert(Link_list.begin(), i);
+        Link_list.insert(Link_list.begin(), prov(distr));
 
     }
     for (int i = start; i < finish; i++)
     {
         //Busted_list.push_back(i);
-        Busted_list.insert(Busted_list.begin(), i);
+        Busted_list.insert(Busted_list.begin(), prov(distr));
     }
 
     for (int i = 0; i < linArr.size(); i++) {
@@ -80,10 +87,81 @@ int main()
         Busted_list.at(i) -= 1;
     }
 
-    for (auto el : linArr) {
-        std::cout << el << ' ';
+    /*for (auto &el : linArr) {
+        el = 0;
     }
     std::cout << "\n";
+
+    for (auto &el : Link_list) {
+        el = 0;
+    }
+    std::cout << "\n";
+
+    for (auto &el : Busted_list) {
+        el = 0;
+    }
+    std::cout << "\n";*/
+
+    std::vector<int> uniq;
+    for (auto el : Busted_list) {
+        bool flag{ true };
+        for (auto el_uniq : uniq) {
+            if (el == el_uniq) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            uniq.push_back(el);
+        }
+    }
+    for (auto el : linArr) {
+        bool flag{ true };
+        for (auto el_uniq : uniq) {
+            if (el == el_uniq) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            uniq.push_back(el);
+        }
+    }
+    for (auto el : Link_list) {
+        bool flag{ true };
+        for (auto el_uniq : uniq) {
+            if (el == el_uniq) {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            uniq.push_back(el);
+        }
+    }
+
+
+    
+
+
+    std::cout << uniq.size() << " unique:\n";
+    for (auto el_uniq : uniq) {
+        std::cout << el_uniq<< ' ';
+    }
+    std::cout << "\n";
+
+
+    //_____________________________
+    std::set<int> unique;
+    for (auto el : Link_list) { unique.insert(el); }
+    for (auto el : linArr) { unique.insert(el); }
+    for (auto el : Busted_list) { unique.insert(el); }
+    std::cout << uniq.size() << " unique:\n";
+    for (auto el_uniq : unique) {
+        std::cout << el_uniq << ' ';
+    }
+    std::cout << "\n";
+
 
 
     {
